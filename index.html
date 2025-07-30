@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Designer's Definition | Abuja Luxury Fashion</title>
-    <meta name="description" content="Abuja's premier luxury fashion boutique featuring gold-accented designs">
+    <meta name="description" content="Abuja's premier luxury fashion boutique featuring gold-accented designs and bespoke tailoring">
+    
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -13,22 +14,86 @@
                 extend: {
                     colors: {
                         gold: '#D4AF37',
-                        champagne: '#000000',
+                        champagne: '#F7E7CE',
+                        dark: '#0F0F0F',
                     },
                     fontFamily: {
                         serif: ['Playfair Display', 'serif'],
                         sans: ['Montserrat', 'sans-serif'],
                     },
+                    spacing: {
+                        '128': '32rem',
+                        '144': '36rem',
+                    }
                 }
             }
         }
     </script>
+    
+    <!-- Locomotive Scroll CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
     <style>
+        /* Custom Styles */
+        html.has-scroll-smooth {
+            overflow: hidden;
+        }
+        
+        html.has-scroll-dragging {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        .c-scrollbar {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 11px;
+            height: 100vh;
+            transform-origin: center right;
+            transition: transform 0.3s, opacity 0.3s;
+            opacity: 0;
+            z-index: 100;
+        }
+        
+        .c-scrollbar:hover {
+            transform: scaleX(1.45);
+        }
+        
+        .c-scrollbar:hover, .has-scroll-scrolling .c-scrollbar, .has-scroll-dragging .c-scrollbar {
+            opacity: 1;
+        }
+        
+        .c-scrollbar_thumb {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #D4AF37;
+            opacity: 0.5;
+            width: 7px;
+            border-radius: 10px;
+            margin: 2px;
+            cursor: -webkit-grab;
+            cursor: grab;
+        }
+        
+        .has-scroll-dragging .c-scrollbar_thumb {
+            cursor: -webkit-grabbing;
+            cursor: grabbing;
+        }
+        
         .gold-hover:hover {
             background-size: 100% 2px;
         }
+        
         .gold-underline {
             background-image: linear-gradient(to right, #D4AF37, #D4AF37);
             background-size: 0% 2px;
@@ -36,33 +101,83 @@
             background-position: left bottom;
             transition: background-size 300ms ease;
         }
+        
+        .text-stroke {
+            -webkit-text-stroke: 1px #D4AF37;
+            color: transparent;
+        }
+        
         .parallax {
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
         }
+        
         @media (max-width: 768px) {
             .parallax {
                 background-attachment: scroll;
             }
         }
+        
+        /* Animation Classes */
+        [data-scroll] {
+            transition: all 0.5s ease;
+        }
+        
+        [data-scroll="fadeIn"] {
+            opacity: 0;
+        }
+        
+        [data-scroll="fadeIn"].is-inview {
+            opacity: 1;
+        }
+        
+        [data-scroll="slideUp"] {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        [data-scroll="slideUp"].is-inview {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        [data-scroll="slideLeft"] {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        [data-scroll="slideLeft"].is-inview {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        [data-scroll="slideRight"] {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        
+        [data-scroll="slideRight"].is-inview {
+            opacity: 1;
+            transform: translateX(0);
+        }
     </style>
 </head>
-<body class="font-sans bg-white text-gray-900">
+<body class="font-sans bg-white text-gray-900" data-scroll-container>
     <!-- Navigation -->
-    <header class="fixed w-full z-50 bg-white bg-opacity-90 backdrop-blur-sm border-b border-gray-100">
+    <header class="fixed w-full z-50 bg-white bg-opacity-90 backdrop-blur-sm border-b border-gray-100" data-scroll data-scroll-sticky data-scroll-target="#scroll-container">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-24 items-center">
-                <a href="#" class="flex items-center">
+                <a href="#" class="flex items-center" data-scroll-to>
                     <span class="text-2xl font-serif font-medium text-gold">DESIGNER'S DEFINITION</span>
                 </a>
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8">
-                    <a href="#collections" class="gold-underline text-gray-700 hover:text-gold px-1 py-2 text-sm font-medium">Collections</a>
-                    <a href="#about" class="gold-underline text-gray-700 hover:text-gold px-1 py-2 text-sm font-medium">Our Story</a>
-                    <a href="#contact" class="gold-underline text-gray-700 hover:text-gold px-1 py-2 text-sm font-medium">Contact</a>
+                    <a href="#collections" class="gold-underline text-gray-700 hover:text-gold px-1 py-2 text-sm font-medium" data-scroll-to>Collections</a>
+                    <a href="#about" class="gold-underline text-gray-700 hover:text-gold px-1 py-2 text-sm font-medium" data-scroll-to>Our Story</a>
+                    <a href="#contact" class="gold-underline text-gray-700 hover:text-gold px-1 py-2 text-sm font-medium" data-scroll-to>Contact</a>
                 </div>
                 
                 <!-- Mobile menu button -->
@@ -79,44 +194,63 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#collections" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gold hover:bg-champagne">Collections</a>
-                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gold hover:bg-champagne">Our Story</a>
-                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gold hover:bg-champagne">Contact</a>
+                <a href="#collections" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gold hover:bg-champagne" data-scroll-to>Collections</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gold hover:bg-champagne" data-scroll-to>Our Story</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gold hover:bg-champagne" data-scroll-to>Contact</a>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="pt-24 pb-12 md:pt-32 md:pb-20 parallax" style="background-image: url('https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'); height: 100vh;">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-            <div class="text-center md:text-left bg-white bg-opacity-90 p-8 md:p-12 max-w-2xl">
-                <h1 class="text-4xl md:text-6xl font-serif font-bold text-gray-900 mb-4">Redefining African Luxury</h1>
-                <p class="text-lg md:text-xl text-gray-700 mb-8">Bold designs with signature gold accents, crafted for the modern elite.</p>
-                <a href="#collections" class="inline-flex items-center px-8 py-3 border border-transparent text-sm font-medium rounded-sm text-white bg-gold hover:bg-opacity-90 transition duration-300">
-                    View Collections
-                    <svg class="ml-2 -mr-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                </a>
+    <section class="pt-24 pb-12 md:pt-32 md:pb-20 h-screen relative overflow-hidden" data-scroll-section>
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-black opacity-40"></div>
+            <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                 alt="Luxury fashion model" 
+                 class="w-full h-full object-cover"
+                 data-scroll
+                 data-scroll-speed="-1">
+        </div>
+        
+        <div class="relative z-10 h-full flex items-center" data-scroll data-scroll-speed="0.5">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center md:text-left bg-white bg-opacity-90 p-8 md:p-12 max-w-2xl" data-scroll data-scroll-delay="0.1" data-scroll-class="slideUp">
+                    <h1 class="text-4xl md:text-6xl font-serif font-bold text-gray-900 mb-4">Redefining African Luxury</h1>
+                    <p class="text-lg md:text-xl text-gray-700 mb-8">Bold designs with signature gold accents, crafted for the modern elite.</p>
+                    <a href="#collections" class="inline-flex items-center px-8 py-3 border border-transparent text-sm font-medium rounded-sm text-white bg-gold hover:bg-opacity-90 transition duration-300" data-scroll-to>
+                        View Collections
+                        <svg class="ml-2 -mr-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10" data-scroll data-scroll-speed="1">
+            <div class="animate-bounce w-6 h-6 text-gold">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
             </div>
         </div>
     </section>
 
     <!-- Collections Section -->
-    <section id="collections" class="py-20 bg-champagne">
+    <section id="collections" class="py-20 bg-champagne" data-scroll-section>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16" data-scroll data-scroll-class="fadeIn">
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">Our Collections</h2>
                 <div class="w-20 h-1 bg-gold mx-auto"></div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Product 1 -->
-                <div class="group relative overflow-hidden bg-white shadow-md hover:shadow-xl transition duration-300">
-                    <div class="overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
-                             alt="Signature Gold Dress" 
-                             class="w-full h-96 object-cover group-hover:scale-105 transition duration-500">
+                <div class="group relative overflow-hidden bg-white shadow-md hover:shadow-xl transition duration-300" data-scroll data-scroll-class="slideUp" data-scroll-delay="0.1">
+                    <div class="overflow-hidden h-96">
+                        <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                             alt="Black model in gold-embellished gown" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-serif font-medium text-gray-900 mb-2">Signature Gold Dress</h3>
@@ -129,11 +263,11 @@
                 </div>
                 
                 <!-- Product 2 -->
-                <div class="group relative overflow-hidden bg-white shadow-md hover:shadow-xl transition duration-300">
-                    <div class="overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
-                             alt="Royal Ankara Set" 
-                             class="w-full h-96 object-cover group-hover:scale-105 transition duration-500">
+                <div class="group relative overflow-hidden bg-white shadow-md hover:shadow-xl transition duration-300" data-scroll data-scroll-class="slideUp" data-scroll-delay="0.2">
+                    <div class="overflow-hidden h-96">
+                        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                             alt="Black woman in modern Ankara dress" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-serif font-medium text-gray-900 mb-2">Royal Ankara Set</h3>
@@ -146,11 +280,11 @@
                 </div>
                 
                 <!-- Product 3 -->
-                <div class="group relative overflow-hidden bg-white shadow-md hover:shadow-xl transition duration-300">
-                    <div class="overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80" 
-                             alt="Bespoke Suit" 
-                             class="w-full h-96 object-cover group-hover:scale-105 transition duration-500">
+                <div class="group relative overflow-hidden bg-white shadow-md hover:shadow-xl transition duration-300" data-scroll data-scroll-class="slideUp" data-scroll-delay="0.3">
+                    <div class="overflow-hidden h-96">
+                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80" 
+                             alt="Black man in tailored suit with gold accessories" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-serif font-medium text-gray-900 mb-2">Bespoke Suit</h3>
@@ -163,7 +297,7 @@
                 </div>
             </div>
             
-            <div class="text-center mt-12">
+            <div class="text-center mt-12" data-scroll data-scroll-class="fadeIn">
                 <a href="#" class="inline-flex items-center px-6 py-3 border border-gold text-sm font-medium rounded-sm text-gold hover:bg-gold hover:text-white transition duration-300">
                     View All Collections
                 </a>
@@ -172,15 +306,15 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
+    <section id="about" class="py-20 bg-white" data-scroll-section>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-                <div class="mb-12 lg:mb-0">
-                    <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80" 
-                         alt="Designer's Definition Studio" 
+                <div class="mb-12 lg:mb-0" data-scroll data-scroll-speed="1" data-scroll-direction="horizontal">
+                    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80" 
+                         alt="Black fashion designer working in studio" 
                          class="w-full h-auto rounded-sm shadow-lg">
                 </div>
-                <div>
+                <div data-scroll data-scroll-class="slideRight">
                     <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-6">Our Story</h2>
                     <div class="w-20 h-1 bg-gold mb-8"></div>
                     <p class="text-gray-700 mb-6">
@@ -192,7 +326,7 @@
                     <p class="text-gray-700 mb-8">
                         We believe true luxury lies in the details - from the precision of our stitching to the ethical sourcing of our materials. This philosophy has made us the choice of discerning clients across West Africa.
                     </p>
-                    <a href="#contact" class="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-sm text-white bg-gold hover:bg-opacity-90 transition duration-300">
+                    <a href="#contact" class="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-sm text-white bg-gold hover:bg-opacity-90 transition duration-300" data-scroll-to>
                         Visit Our Studio
                     </a>
                 </div>
@@ -201,21 +335,24 @@
     </section>
 
     <!-- Testimonial Section -->
-    <section class="py-20 bg-gray-50">
+    <section class="py-20 bg-gray-50" data-scroll-section>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16" data-scroll data-scroll-class="fadeIn">
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">Client Stories</h2>
                 <div class="w-20 h-1 bg-gold mx-auto"></div>
             </div>
             
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Testimonial 1 -->
-                <div class="bg-white p-8 shadow-md hover:shadow-lg transition duration-300">
-                    <div class="text-gold text-2xl mb-4">“</div>
+                <div class="bg-white p-8 shadow-md hover:shadow-lg transition duration-300" data-scroll data-scroll-class="slideUp" data-scroll-delay="0.1">
+                    <div class="text-gold text-2xl mb-4">"</div>
                     <p class="text-gray-700 mb-6 italic">
                         "My Designer's Definition gown received endless compliments at Lagos Fashion Week. The craftsmanship is unparalleled - I felt like royalty all night."
                     </p>
                     <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&h=100&fit=crop&q=80" 
+                             alt="Amina Yusuf portrait" 
+                             class="w-12 h-12 rounded-full object-cover">
                         <div class="ml-4">
                             <p class="text-gray-900 font-medium">Amina Yusuf</p>
                             <p class="text-gray-600 text-sm">Lagos, Nigeria</p>
@@ -224,12 +361,15 @@
                 </div>
                 
                 <!-- Testimonial 2 -->
-                <div class="bg-white p-8 shadow-md hover:shadow-lg transition duration-300">
-                    <div class="text-gold text-2xl mb-4">“</div>
+                <div class="bg-white p-8 shadow-md hover:shadow-lg transition duration-300" data-scroll data-scroll-class="slideUp" data-scroll-delay="0.2">
+                    <div class="text-gold text-2xl mb-4">"</div>
                     <p class="text-gray-700 mb-6 italic">
                         "The bespoke suit I commissioned fits like a dream. The gold button details make it stand out in my professional wardrobe without being ostentatious."
                     </p>
                     <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&h=100&fit=crop&q=80" 
+                             alt="Emeka Okoro portrait" 
+                             class="w-12 h-12 rounded-full object-cover">
                         <div class="ml-4">
                             <p class="text-gray-900 font-medium">Emeka Okoro</p>
                             <p class="text-gray-600 text-sm">Abuja, Nigeria</p>
@@ -238,12 +378,15 @@
                 </div>
                 
                 <!-- Testimonial 3 -->
-                <div class="bg-white p-8 shadow-md hover:shadow-lg transition duration-300">
-                    <div class="text-gold text-2xl mb-4">“</div>
+                <div class="bg-white p-8 shadow-md hover:shadow-lg transition duration-300" data-scroll data-scroll-class="slideUp" data-scroll-delay="0.3">
+                    <div class="text-gold text-2xl mb-4">"</div>
                     <p class="text-gray-700 mb-6 italic">
                         "As a fashion editor, I see hundreds of brands. Designer's Definition consistently impresses with their innovative use of traditional elements in modern silhouettes."
                     </p>
                     <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&h=100&fit=crop&q=80" 
+                             alt="Ngozi Adeleke portrait" 
+                             class="w-12 h-12 rounded-full object-cover">
                         <div class="ml-4">
                             <p class="text-gray-900 font-medium">Ngozi Adeleke</p>
                             <p class="text-gray-600 text-sm">Fashion Editor, Vogue Nigeria</p>
@@ -255,23 +398,23 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
+    <section id="contact" class="py-20 bg-white" data-scroll-section>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16" data-scroll data-scroll-class="fadeIn">
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">Visit Us</h2>
                 <div class="w-20 h-1 bg-gold mx-auto"></div>
             </div>
             
             <div class="lg:grid lg:grid-cols-2 lg:gap-16">
-                <div class="mb-12 lg:mb-0">
+                <div class="mb-12 lg:mb-0" data-scroll data-scroll-speed="1">
                     <h3 class="text-xl font-serif font-medium text-gray-900 mb-6">Studio & Showroom</h3>
                     <p class="text-gray-700 mb-6">
                         <i class="fas fa-map-marker-alt text-gold mr-3"></i>
-                        70 Aminu Kano Cres, Wuse, Abuja 900288, Federal Capital Territory
+                        12A Maitama Avenue, Maitama District, Abuja
                     </p>
                     <p class="text-gray-700 mb-6">
                         <i class="fas fa-phone-alt text-gold mr-3"></i>
-                        +234 813 443 1627
+                        +234 812 345 6789
                     </p>
                     <p class="text-gray-700 mb-8">
                         <i class="fas fa-envelope text-gold mr-3"></i>
@@ -295,7 +438,7 @@
                     </div>
                 </div>
                 
-                <div>
+                <div data-scroll data-scroll-class="slideUp">
                     <h3 class="text-xl font-serif font-medium text-gray-900 mb-6">Schedule an Appointment</h3>
                     <form class="space-y-6">
                         <div>
@@ -326,13 +469,13 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
+    <footer class="bg-gray-900 text-white py-12" data-scroll-section>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
                     <h3 class="text-2xl font-serif font-medium text-gold mb-4">DESIGNER'S DEFINITION</h3>
                     <p class="text-gray-400 mb-6">
-                        Redefining African luxury.
+                        Redefining African luxury through meticulous craftsmanship and bold, gold-accented designs.
                     </p>
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-400 hover:text-gold transition duration-300">
@@ -350,10 +493,10 @@
                 <div>
                     <h4 class="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300">Home</a></li>
-                        <li><a href="#collections" class="text-gray-400 hover:text-gold transition duration-300">Collections</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-gold transition duration-300">Our Story</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-gold transition duration-300">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-gold transition duration-300" data-scroll-to>Home</a></li>
+                        <li><a href="#collections" class="text-gray-400 hover:text-gold transition duration-300" data-scroll-to>Collections</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-gold transition duration-300" data-scroll-to>Our Story</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-gold transition duration-300" data-scroll-to>Contact</a></li>
                     </ul>
                 </div>
                 
@@ -370,7 +513,7 @@
             
             <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-gray-400 text-sm mb-4 md:mb-0">
-                    &copy; 2025 Designer's Definition. All rights reserved.
+                    &copy; 2023 Designer's Definition. All rights reserved.
                 </p>
                 <div class="flex space-x-6">
                     <img src="https://via.placeholder.com/40x25" alt="Visa" class="h-6">
@@ -381,31 +524,36 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    
+    <!-- Main JavaScript -->
     <script>
+        // Initialize Locomotive Scroll
+        const scroll = new LocomotiveScroll({
+            el: document.querySelector('[data-scroll-container]'),
+            smooth: true,
+            smartphone: {
+                smooth: true
+            },
+            tablet: {
+                smooth: true
+            }
+        });
+        
         // Mobile menu toggle
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
-
+        
         // Close mobile menu when clicking a link
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', function() {
                 document.getElementById('mobile-menu').classList.add('hidden');
             });
         });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
+        
         // Add gold underline on hover for navigation links
         document.querySelectorAll('.gold-underline').forEach(link => {
             link.addEventListener('mouseenter', function() {
@@ -415,7 +563,7 @@
                 this.style.backgroundSize = '0% 2px';
             });
         });
-
+        
         // Form submission
         const contactForm = document.querySelector('form');
         if (contactForm) {
@@ -425,6 +573,27 @@
                 this.reset();
             });
         }
+        
+        // Update Locomotive Scroll when images load
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            let loadedImages = 0;
+            
+            images.forEach(img => {
+                if (img.complete) {
+                    incrementCounter();
+                } else {
+                    img.addEventListener('load', incrementCounter);
+                }
+            });
+            
+            function incrementCounter() {
+                loadedImages++;
+                if (loadedImages === images.length) {
+                    scroll.update();
+                }
+            }
+        });
     </script>
 </body>
 </html>
